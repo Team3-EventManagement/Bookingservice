@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: booking-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: booking_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  booking-service:
+    build: .
+    container_name: booking-service
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_HOST=db
+      - MYSQL_DB=booking_db
+      - EVENT_SERVICE_URL=http://event-service/events
+      - PAYMENT_SERVICE_URL=http://payment-service/payments
+    depends_on:
+      - db
+
+volumes:
+  db_data:

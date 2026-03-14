@@ -21,7 +21,13 @@ A microservice for managing event bookings, built with FastAPI, SQLAlchemy, and 
    uvicorn app.main:app --reload
    ```
 
-### Docker
+### Docker Compose (Recommended)
+This will start both the Booking Service and a MySQL database:
+```bash
+docker-compose up --build
+```
+
+### Docker (Manual)
 ```bash
 docker build -t booking-service .
 docker run -p 8000:8000 booking-service
