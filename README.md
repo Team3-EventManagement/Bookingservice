@@ -16,6 +16,7 @@ A microservice for managing event bookings, built with FastAPI, SQLAlchemy, and 
    ```
 2. Set environment variables (optional):
    - `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_HOST`, `MYSQL_DB`
+   - Alternatively, copy `.env.example` to `.env` and fill in the values.
 3. Run the app:
    ```bash
    uvicorn app.main:app --reload
