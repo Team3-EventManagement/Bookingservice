@@ -13,6 +13,14 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: booking-rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   booking-service:
     build: .
     container_name: booking-service
@@ -24,10 +32,13 @@ services:
       - MYSQL_PASSWORD=password
       - MYSQL_HOST=db
       - MYSQL_DB=booking_db
-      - EVENT_SERVICE_URL=http://event-service/events
-      - PAYMENT_SERVICE_URL=http://payment-service/payments
+      - EVENT_SERVICE_URL=http://event-service:8001/events
+      - PAYMENT_SERVICE_URL=http://payment-service:8002/payments
+      - RABBITMQ_HOST=rabbitmq
+      - JWT_SECRET=your_super_secret_jwt_key
     depends_on:
       - db
+      - rabbitmq
 
 volumes:
   db_data:
