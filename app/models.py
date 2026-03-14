@@ -5,9 +5,10 @@ from .database import Base
 import enum
 
 class BookingStatus(str, enum.Enum):
-    PENDING = "pending"
-    CONFIRMED = "confirmed"
-    CANCELLED = "cancelled"
+    PENDING_PAYMENT = "PENDING_PAYMENT"
+    CONFIRMED = "CONFIRMED"
+    CANCELLED = "CANCELLED"
+    EXPIRED = "EXPIRED"
 
 class Booking(Base):
     __tablename__ = "bookings"
@@ -16,5 +17,5 @@ class Booking(Base):
     user_id = Column(Integer, index=True)
     event_id = Column(Integer, index=True)
     seat_number = Column(String(50))
-    status = Column(String(20), default=BookingStatus.PENDING)
+    status = Column(String(20), default=BookingStatus.PENDING_PAYMENT)
     created_at = Column(DateTime, default=datetime.utcnow)
